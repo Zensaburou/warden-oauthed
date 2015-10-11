@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
 
+gem 'multi_json',   '~>1.11.2'
 gem 'json',   '~>1.5'
 gem 'warden', '~>1.0'
 gem 'oauth2', '~>0.5.2'

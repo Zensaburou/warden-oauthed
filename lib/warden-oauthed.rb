@@ -1,6 +1,6 @@
 require 'warden'
 require 'oauth2'
-require 'json'
+require 'multi_json'
 
 module Warden
   module Oauthed

@@ -8,19 +8,14 @@ module Warden
         end
 
         def ssl_options
-          ca_file = "/usr/lib/ssl/certs/ca-certificates.crt"
-          if File.exists?(ca_file)
-            { :ca_file => ca_file }
-          else
-            { :ca_file => ''}
-          end
+          { version: :TLSv1 }
         end
 
         def client
           @client ||= OAuth2::Client.new(@client_id, @secret,
-                                         :ssl           => ssl_options,
-                                         :site          => oauth_domain,
-                                         :authorize_url => '/oauth/authorize')
+            ssl: ssl_options,
+            site: oauth_domain,
+            authorize_url: '/oauth/authorize')
         end
 
         def api_for(code)

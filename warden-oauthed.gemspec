@@ -12,7 +12,8 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.description = s.summary
 
-  s.add_dependency 'json',   '~>1.5'
+  s.add_dependency 'json', '~>1.5'
+  s.add_dependency 'multi_json', '~>1.11.2'
   s.add_dependency 'warden', '~>1.0'
   s.add_dependency 'oauth2', '~>0.5.2'
 

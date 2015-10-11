@@ -2,8 +2,7 @@ module Warden
   module Oauthed
     module Oauth
       class User < Struct.new(:attribs, :token)
-        ATTRIBUTES = %w[id full_name email].freeze
-
+        ATTRIBUTES = (ENV['USER_ATTRIBUTES'] || 'id email').split(/\s/).freeze
         
         ATTRIBUTES.each do |name|
           define_method(name) { attribs[name] }

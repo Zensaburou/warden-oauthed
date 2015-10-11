@@ -5,16 +5,20 @@ Warden::Strategies.add(:oauthed) do
     @params ||= Rack::Utils.parse_query(request.query_string)
   end
 
+  def api_url
+    ENV['API_BASE_URL'] || '/api/v1'
+  end
+
   def authenticate!
     if params['code']
       begin
         api = api_for(params['code'])
 
-        resp = api.get '/api/v1/me' do |request|
+        resp = api.get "#{api_url}/me" do |request|
           request.params['access_token'] = api.token
         end.body
 
-        user = JSON.parse(resp)
+        user = MultiJson.load(resp)
         success!(Warden::Oauthed::Oauth::User.new(user['user'], api.token))
       rescue OAuth2::Error
         %(<p>Outdated ?code=#{params['code']}:</p><p>#{$!}</p><p><a href="/auth/oauthed">Retry</a></p>)
