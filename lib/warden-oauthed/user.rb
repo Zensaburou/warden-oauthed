@@ -2,12 +2,17 @@ module Warden
   module Oauthed
     module Oauth
       class User < Struct.new(:attribs, :token)
-        ATTRIBUTES = (ENV['USER_ATTRIBUTES'] || 'id email').split(/\s/).freeze
         
-        ATTRIBUTES.each do |name|
-          define_method(name) { attribs[name] }
+        def oauthed_raw_request(path, params = {})
+          puts "#{ENV['API_BASE_URL'] }/#{path}"
+          req = Faraday.new(url: "#{ENV['API_BASE_URL'] }/#{path}")
+          req.authorization :Bearer, token
+          req.get.body
         end
         
+        def oauthed_request(path, params = {})
+          MultiJson.load(oauthed_raw_request(path, params))
+        end
       end
     end
   end
