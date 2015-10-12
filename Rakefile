@@ -3,10 +3,11 @@ require 'rubygems/specification'
 require 'date'
 require 'bundler'
 
-task :default => [:spec]
+task default: [:spec]
 
 require 'rspec/core/rake_task'
-desc "Run specs"
+
+desc 'Run specs'
 RSpec::Core::RakeTask.new do |t|
   t.pattern = 'spec/**/*_spec.rb'
 end

@@ -20,12 +20,13 @@ Warden::Strategies.add(:oauthed) do
 
         user = MultiJson.load(resp)
         success!(Warden::Oauthed::Oauth::User.new(user['user'], api.token))
+
       rescue OAuth2::Error
         %(<p>Outdated ?code=#{params['code']}:</p><p>#{$!}</p><p><a href="/auth/oauthed">Retry</a></p>)
       end
     else
       env['rack.session']['return_to'] = env['REQUEST_URI']
-      throw(:warden, [ 302, {'Location' => authorize_url}, [ ]])
+      throw(:warden, [ 302, { 'Location' => authorize_url }, []])
     end
   end
 
@@ -44,26 +45,32 @@ Warden::Strategies.add(:oauthed) do
   end
 
   def oauth_proxy
-    @oauth_proxy ||= Warden::Oauthed::Oauth::Proxy.new(env['warden'].config[:oauthed_client_id],
+    @oauth_proxy ||= Warden::Oauthed::Oauth::Proxy.new(
+      env['warden'].config[:oauthed_client_id],
       env['warden'].config[:oauthed_secret],
       env['warden'].config[:oauthed_scopes],
       env['warden'].config[:oauthed_oauth_domain],
-      callback_url)
+      callback_url
+    )
   end
 
   def callback_url
-    absolute_url(request, env['warden'].config[:oauthed_callback_url], env['HTTP_X_FORWARDED_PROTO'])
+    absolute_url(
+      request,
+      env['warden'].config[:oauthed_callback_url],
+      env['HTTP_X_FORWARDED_PROTO']
+    )
   end
 
-  def absolute_url(request, suffix = nil, proto = "http")
-    port_part = 
+  def absolute_url(request, suffix = nil, proto = 'http')
+    port_part =
       case request.scheme
-      when "http"
-        request.port == 80 ? "" : ":#{request.port}"
-      when "https"
-        request.port == 443 ? "" : ":#{request.port}"
+      when 'http'
+        request.port == 80 ? '' : ":#{request.port}"
+      when 'https'
+        request.port == 443 ? '' : ":#{request.port}"
       end
-    proto = "http" if proto.nil?
+    proto = 'http' if proto.nil?
     "#{proto}://#{request.host}#{port_part}#{suffix}"
   end
 end

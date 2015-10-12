@@ -1,12 +1,15 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe 'Warden::Oauthed::Oauth::Proxy' do
-  before(:all) do
+  before :all do
     sha = Digest::SHA1.hexdigest(Time.now.to_s)
-    @proxy =  Warden::Oauthed::Oauth::Proxy.new(sha[0..19], sha[0..39],
+    @proxy = Warden::Oauthed::Oauth::Proxy.new(
+      sha[0..19],
+      sha[0..39],
       'public',
       'http://localhost:3000',
-      'http://example.org/auth/oauthed/callback')
+      'http://example.org/auth/oauthed/callback'
+    )
   end
 
   it 'returns an authorize url' do
@@ -22,11 +25,11 @@ describe 'Warden::Oauthed::Oauth::Proxy' do
     expect(params['redirect_uri']).to eq 'http://example.org/auth/oauthed/callback'
   end
 
-  it "has a client object" do
+  it 'has a client object' do
     expect(@proxy).not_to be nil
   end
 
   # it "returns access tokens" do
-  #  lambda { @proxy.access_token_for(/\w{20}/.gen) }.should_not raise_error  
+  #  lambda { @proxy.access_token_for(/\w{20}/.gen) }.should_not raise_error
   # end
 end

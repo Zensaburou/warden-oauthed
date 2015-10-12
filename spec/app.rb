@@ -2,8 +2,8 @@ require 'sinatra'
 
 module Example
   class App < Sinatra::Base
-    enable  :sessions
-    enable  :raise_errors
+    enable :sessions
+    enable :raise_errors
     disable :show_exceptions
 
     use Warden::Manager do |manager|
@@ -18,9 +18,7 @@ module Example
 
     helpers do
       def ensure_authenticated
-        unless env['warden'].authenticate!
-          throw(:warden)
-        end
+        throw(:warden) unless env['warden'].authenticate!
       end
 
       def user
@@ -45,14 +43,14 @@ module Example
 
     get '/logout' do
       env['warden'].logout
-      "Peace!"
+      'Peace!'
     end
   end
 
   class BadAuthentication < Sinatra::Base
     get '/unauthenticated' do
       status 403
-      "Unable to authenticate, sorry bud."
+      'Unable to authenticate, sorry bud.'
     end
   end
 

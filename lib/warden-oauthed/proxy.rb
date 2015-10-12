@@ -12,20 +12,25 @@ module Warden
         end
 
         def client
-          @client ||= OAuth2::Client.new(@client_id, @secret,
+          @client ||= OAuth2::Client.new(
+            @client_id,
+            @secret,
             ssl: ssl_options,
             site: oauth_domain,
             authorize_url: '/oauth/authorize')
         end
 
         def api_for(code)
-          client.auth_code.get_token(code, :redirect_uri => callback_url)
+          client.auth_code.get_token(
+            code,
+            redirect_uri: callback_url
+          )
         end
 
         def authorize_url
           client.auth_code.authorize_url(
-            :scope        => scopes,
-            :redirect_uri => callback_url
+            scope:        scopes,
+            redirect_uri: callback_url
           )
         end
       end
