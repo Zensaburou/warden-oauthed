@@ -5,11 +5,11 @@ require 'warden-oauthed/version'
 Gem::Specification.new do |s|
   s.name        = 'warden-oauthed'
   s.version     = Warden::Oauthed::VERSION
-  s.platform    = Gem::Platform::RUBY
   s.authors     = ['David Jaress', 'Seth Herr']
   s.homepage    = 'https://github.com/Zensaburou/warden-oauthed'
-  s.summary     = 'A warden strategy for easy oauth integration with OAuth2 provided by Doorkeeper'
   s.license     = 'MIT'
+  s.summary     = 'A warden strategy for easy OAuth2 rack based
+                   authentication'
   s.description = s.summary
 
   s.add_dependency 'json', '~>1.5'
@@ -28,7 +28,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rack-test', '~>0.5.3'
 
   s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
+  s.test_files    = `git ls-files -- {spec}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n")
+    .map { |f| File.basename(f) }
   s.require_paths = ['lib']
 end

@@ -4,7 +4,11 @@ module Warden
       class Proxy
         attr_accessor :client_id, :secret, :scopes, :oauth_domain, :callback_url
         def initialize(client_id, secret, scopes, oauth_domain, callback_url)
-          @client_id, @secret, @scopes, @oauth_domain, @callback_url = client_id, secret, scopes, oauth_domain, callback_url
+          @client_id = client_id
+          @secret = secret
+          @scopes = scopes
+          @oauth_domain = oauth_domain
+          @callback_url = callback_url
         end
 
         def ssl_options

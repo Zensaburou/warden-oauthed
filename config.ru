@@ -10,8 +10,9 @@ end
 
 Bundler.require(:runtime)
 
-$LOAD_PATH << File.dirname(__FILE__) + '/lib'
-require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'warden-oauthed'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'spec', 'app'))
+file_dir = File.dirname(__FILE__)
+$LOAD_PATH << file_dir + '/lib'
+require File.expand_path(File.join(file_dir, 'lib', 'warden-oauthed'))
+require File.expand_path(File.join(file_dir, 'spec', 'app'))
 
 run Example.app

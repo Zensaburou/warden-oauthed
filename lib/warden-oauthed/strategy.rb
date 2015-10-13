@@ -12,25 +12,28 @@ Warden::Strategies.add(:oauthed) do
   def authenticate!
     if params['code']
       begin
-        api = api_for(params['code'])
-
-        resp = api.get "#{api_url}/me" do |request|
-          request.params['access_token'] = api.token
-        end.body
-
-        user = MultiJson.load(resp)
-        success!(Warden::Oauthed::Oauth::User.new(user['user'], api.token))
-
+        get_user_api_response(params)
       rescue OAuth2::Error
-        %(<p>Outdated ?code=#{params['code']}:</p><p>#{$!}</p><p><a href="/auth/oauthed">Retry</a></p>)
+        %(<p>Outdated ?code=#{params['code']}:</p><p>#{$ERROR_INFO}</p>
+          <p><a href="/auth/oauthed">Retry</a></p>)
       end
     else
       env['rack.session']['return_to'] = env['REQUEST_URI']
-      throw(:warden, [ 302, { 'Location' => authorize_url }, []])
+      throw(:warden, [302, { 'Location' => authorize_url }, []])
     end
   end
 
   private
+
+  def get_user_api_response(params)
+    api = api_for(params['code'])
+    resp = api.get "#{api_url}/me" do |request|
+      request.params['access_token'] = api.token
+    end.body
+
+    user = MultiJson.load(resp)
+    success!(Warden::Oauthed::Oauth::User.new(user['user'], api.token))
+  end
 
   def oauth_client
     oauth_proxy.client
