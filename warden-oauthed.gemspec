@@ -13,19 +13,19 @@ Gem::Specification.new do |s|
   s.description = s.summary
 
   s.add_dependency 'json', '~>1.5'
-  s.add_dependency 'multi_json', '~>1.11.2'
+  s.add_dependency 'multi_json', '~> 1.11', '>= 1.11.2'
   s.add_dependency 'warden', '~>1.0'
-  s.add_dependency 'oauth2', '~>0.5.2'
+  s.add_dependency 'oauth2', '~>0.5', '>=0.5.2'
 
-  s.add_development_dependency 'rack', '~>1.6.0'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rerun'
-  s.add_development_dependency 'rspec', '~>2.8.0'
-  s.add_development_dependency 'webrat'
-  s.add_development_dependency 'sinatra'
-  s.add_development_dependency 'shotgun'
-  s.add_development_dependency 'addressable', '~>2.2.0'
-  s.add_development_dependency 'rack-test', '~>0.5.3'
+  s.add_development_dependency 'rack', '~> 1.6', '>=1.6.0'
+  s.add_development_dependency 'rake', '~> 10.4', '>=10.4.2'
+  s.add_development_dependency 'rerun', '~> 0.11', '>=0.11.0'
+  s.add_development_dependency 'rspec', '~> 2.8', '>=2.8.0'
+  s.add_development_dependency 'webrat', '~> 0.7', '>=0.7.3'
+  s.add_development_dependency 'sinatra', '~> 1.4', '>=1.4.6'
+  s.add_development_dependency 'shotgun', '~> 0.9', '>=0.9.1'
+  s.add_development_dependency 'addressable', '~> 2.2', '>=2.2.0'
+  s.add_development_dependency 'rack-test', '~> 0.5', '>=0.5.3'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {spec}/*`.split("\n")
